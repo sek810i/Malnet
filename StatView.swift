@@ -24,26 +24,26 @@ class StatView: UIViewController {
     
     @IBAction func serStartDate(_ sender: UITextField) {
         let datePicker:UIDatePicker = UIDatePicker()
-        datePicker.datePickerMode = UIDatePickerMode.date
+        datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.setValue(UIColor.red, forKey: "textColor")
         datePicker.locale = NSLocale.init(localeIdentifier: "RU") as Locale
         sender.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(datePikerValueChange1), for: UIControlEvents.valueChanged)
+        datePicker.addTarget(self, action: #selector(datePikerValueChange1), for: UIControl.Event.valueChanged)
         let bar = UIToolbar()
         bar.barStyle = .default
         bar.tintColor = UIColor.red
         bar.sizeToFit()
-        let doneItem = UIBarButtonItem(title: "Готово", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneEdit1))
+        let doneItem = UIBarButtonItem(title: "Готово", style: UIBarButtonItem.Style.done, target: self, action: #selector(doneEdit1))
         bar.setItems([doneItem], animated: false)
         bar.isUserInteractionEnabled = true
         beginDate.inputAccessoryView = bar
         
         
     }
-    func doneEdit1() {
+    @objc func doneEdit1() {
         beginDate.resignFirstResponder()
     }
-    func datePikerValueChange1(sender: UIDatePicker) {
+    @objc func datePikerValueChange1(sender: UIDatePicker) {
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = DateFormatter.Style.medium
         dateFormat.timeStyle = DateFormatter.Style.none
@@ -54,24 +54,24 @@ class StatView: UIViewController {
     
     @IBAction func setEndDate1(_ sender: UITextField) {
         let datePicker:UIDatePicker = UIDatePicker()
-        datePicker.datePickerMode = UIDatePickerMode.date
+        datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.setValue(UIColor.red, forKey: "textColor")
         datePicker.locale = NSLocale.init(localeIdentifier: "RU") as Locale
         sender.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(datePikerValueChange2), for: UIControlEvents.valueChanged)
+        datePicker.addTarget(self, action: #selector(datePikerValueChange2), for: UIControl.Event.valueChanged)
         let bar = UIToolbar()
         bar.barStyle = .default
         bar.tintColor = UIColor.red
         bar.sizeToFit()
-        let doneItem = UIBarButtonItem(title: "Готово", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneEdit2))
+        let doneItem = UIBarButtonItem(title: "Готово", style: UIBarButtonItem.Style.done, target: self, action: #selector(doneEdit2))
         bar.setItems([doneItem], animated: false)
         bar.isUserInteractionEnabled = true
         endDate.inputAccessoryView = bar
     }
-    func doneEdit2() {
+    @objc func doneEdit2() {
         endDate.resignFirstResponder()
     }
-    func datePikerValueChange2(sender: UIDatePicker) {
+    @objc func datePikerValueChange2(sender: UIDatePicker) {
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = DateFormatter.Style.medium
         dateFormat.timeStyle = DateFormatter.Style.none

@@ -20,31 +20,31 @@ class SupportView: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var messageTextField: UITextField!
     
     @IBAction func sendMessage(_ sender: Any) {
-        (childViewControllers[0] as? MessegeTableView)?.addNewMeaasge(mes: (messageTextField?.text)!)
-        (childViewControllers[0] as? MessegeTableView)?.tableView.reloadData()
-        (childViewControllers[0] as? MessegeTableView)?.tableView.updateConstraints()
+        (children[0] as? MessegeTableView)?.addNewMeaasge(mes: (messageTextField?.text)!)
+        (children[0] as? MessegeTableView)?.tableView.reloadData()
+        (children[0] as? MessegeTableView)?.tableView.updateConstraints()
         messageTextField?.text=""
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         messageTextField.returnKeyType = .default
         messageTextField.delegate = self as UITextFieldDelegate
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             keyBoardHeight = keyBoardHeight == 0 ? keyboardSize.height-self.newMessageView.frame.height: keyBoardHeight
             needConst.constant = -keyBoardHeight
-            (childViewControllers[0] as? MessegeTableView)?.scrollToBottom()
+            (children[0] as? MessegeTableView)?.scrollToBottom()
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         needConst.constant = 0
     }
  

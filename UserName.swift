@@ -10,8 +10,8 @@ import Foundation
 import RealmSwift
 
 class RealmUserName: Object {
-    dynamic var login :String = ""
-    dynamic var password :String = ""
+    @objc dynamic var login :String = ""
+    @objc dynamic var password :String = ""
     
     override static func primaryKey() -> String?{
         return "login"

@@ -13,20 +13,20 @@ import RealmSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let aut = Avtorization()
+    //let aut = Avtorization()
     let board = UIStoryboard(name: "Main", bundle: Bundle.main)
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let user = aut.loadUser()
-        if user.login == ""{
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        let user = aut.loadUser()
+//        if user.login == ""{
             let avtController = board.instantiateViewController(withIdentifier: "LogInView")
             self.window?.rootViewController = avtController
-        } else {
-            let mainView = board.instantiateViewController(withIdentifier: "MainView")
-            self.window?.rootViewController = mainView
-            
-        }
+//        } else {
+//            let mainView = board.instantiateViewController(withIdentifier: "MainView")
+//            self.window?.rootViewController = mainView
+//            
+//        }
         
         
         

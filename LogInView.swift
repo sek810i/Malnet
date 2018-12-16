@@ -1,27 +1,46 @@
-//
 //  LogInView.swift
 //  MalNet
 //
 //  Created by Богдан Олег on 24.04.17.
 //  Copyright © 2017 Богдан Олег. All rights reserved.
-//
 
 import UIKit
-import RealmSwift
+import Realm
 
-class LogInView: UIViewController {
+protocol ILogInView: class {
+    
+}
+
+class LogInView: UIViewController, ILogInView {
+    
+    //MARK: - Outlets
     
     @IBOutlet weak var fieldLogin: UITextField!
-    @IBOutlet weak var fieldPassword: UITextField!
+    @IBOutlet weak var fieldPassword: UITextField!{
+        didSet {
+            fieldPassword.isSecureTextEntry = true
+        }
+    }
     
-    let aut = Avtorization()
+    //MARK: - variable
     
     
+    var controller: ILogInViewController?
+    
+    func setupMVC() {
+        let viewController = self
+        let model = LogInViewModel()
+        let controller = LogInViewController()
+        model.controller = controller
+        controller.model = model
+        controller.view = viewController
+        viewController.controller = controller
+    }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupMVC()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,9 +53,11 @@ class LogInView: UIViewController {
         if fieldLogin.text?.isEmpty == true || fieldPassword.text?.isEmpty == true {
             self.present(ShowMessage.print(stitle: "Упс", smessage: "Пустые поля\nЗаполните их чем-нибудь", buttontext: "ОК"), animated: true, completion: nil)
         } else {
-            let user = UserName(login: fieldLogin.text!, password: fieldPassword.text!)
-            aut.userLogIn(user: user)
-            performSegue(withIdentifier: "userIn", sender: self)
+            controller?.sendLogin(login: fieldLogin.text!, password: fieldPassword.text!)
+            
+            
+            
+           // performSegue(withIdentifier: "userIn", sender: self)
         }
         
     }

@@ -35,5 +35,4 @@ class Avtorization {
             self.realm.add(newUser, update: true)
         }
     }
-    
 }
