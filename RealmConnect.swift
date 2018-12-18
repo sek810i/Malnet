@@ -12,4 +12,6 @@ import RealmSwift
 class RealmConnect {
     
     let realm = try! Realm()
+    
+    
 }

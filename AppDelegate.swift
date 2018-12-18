@@ -18,15 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        let user = aut.loadUser()
-//        if user.login == ""{
+        let db = RealmConnect()
+        let isAuth = db.getToken()
+        
+        if isAuth == nil {
             let avtController = board.instantiateViewController(withIdentifier: "LogInView")
             self.window?.rootViewController = avtController
-//        } else {
-//            let mainView = board.instantiateViewController(withIdentifier: "MainView")
-//            self.window?.rootViewController = mainView
-//            
-//        }
+        } else {
+            let mainView = board.instantiateViewController(withIdentifier: "MainView")
+            self.window?.rootViewController = mainView            
+        }
         
         
         

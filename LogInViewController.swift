@@ -10,7 +10,8 @@ import Foundation
 
 protocol ILogInViewController: class {
     func sendLogin(login: String, password: String)
-    
+    func showAlert(message: String)
+    func goToMainScreen()
 }
 
 class LogInViewController: ILogInViewController {
@@ -20,6 +21,14 @@ class LogInViewController: ILogInViewController {
     
     func sendLogin(login: String, password: String) {
         model?.sendLogin(login: login, password: password)
+    }
+    
+    func showAlert(message:String) {
+        view?.showAlert(message: message)
+    }
+    
+    func goToMainScreen() {
+        view?.goToMainScreen()
     }
     
 }

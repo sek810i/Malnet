@@ -1,30 +1,27 @@
 //
-//  LogInViewModel.swift
+//  MainViewModel.swift
 //  MalNet
 //
-//  Created by Oleg Bogdan on 16/12/2018.
+//  Created by Oleg Bogdan on 17/12/2018.
 //  Copyright © 2018 Богдан Олег. All rights reserved.
 //
 
 import Foundation
-import Alamofire
-import SwiftyJSON
-import Alamofire_SwiftyJSON
 
-protocol ILogInViewModel: class {
-    func sendLogin(login: String, password: String)
+protocol IMainModel: class {
+    
 }
 
-class LogInViewModel: ILogInViewModel {
+class MainModel: IMainModel {
+    var controller: IMainController?
     
-    var controller: ILogInViewController?
-    
-    func sendLogin(login: String, password: String) {
+    func loadData(){
         let param: Parameters = [:]
         
-        let request: String = "https://nm.malnet.ru/?controller=api&action=getApiKey&Login=\(login)&Pass=\(password)&DeviceId=\((UIDevice.current.identifierForVendor?.uuidString)!)&Model=\(UIDevice.current.localizedModel)&Vendor=Apple"
         
         
+        let request: String = "https://nm.malnet.ru/?controller=api&action=getApiKey&Login=\()&Pass=\()&DeviceId=\((UIDevice.current.identifierForVendor?.uuidString)!)&Model=\(UIDevice.current.localizedModel)&Vendor=Apple"
+
         Alamofire.request(request, method: .post, parameters: param, encoding: JSONEncoding(), headers: nil).responseSwiftyJSON { (response) in
             switch response.result {
             case .success(let value):
@@ -43,13 +40,14 @@ class LogInViewModel: ILogInViewModel {
                         let db = RealmConnect()
                         db.saveTokens(tokens: tokens)
                     }
-                    self.controller?.goToMainScreen()
+                   // self.controller?.goToMainScreen()
                 } else {
-                    self.controller?.showAlert(message: json["ErrorMessage"].stringValue)
+                    //self.controller?.showAlert(message: json["ErrorMessage"].stringValue)
                 }
             case .failure(let error):
-                self.controller?.showAlert(message: error as! String)
+                //self.controller?.showAlert(message: error as! String)
             }
         }
+
     }
 }

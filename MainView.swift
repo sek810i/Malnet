@@ -8,7 +8,47 @@
 
 import UIKit
 
-class MainView: UIViewController {
+protocol IMainView: class {
+    func loadData()
+    func showData()
+    func showError(message: String)
+}
+
+class MainView: UIViewController, IMainView {
+    
+    //MARK: - Outlets
+    @IBOutlet weak var infoView: UIView! {
+        didSet {
+            infoView.layer.cornerRadius = 10
+            infoView.layer.borderWidth = 1
+            infoView.layer.borderColor = UIColor.clear.cgColor
+            infoView.layer.masksToBounds = true
+        }
+    }
+    
+    @IBOutlet weak var balanseLabel: UILabel!
+    @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var tarifLabel: UILabel!
+    @IBOutlet weak var statusIcon: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    
+    // MARK: - variable
+    var controller: IMainController?
+    
+    // MARK: - MVC
+    
+    func setupMVC() {
+        let viewController = self
+        let model = MainModel()
+        let controller = MainController()
+        model.controller = controller
+        controller.model = model
+        controller.view = viewController
+        viewController.controller = controller
+    }
+
+    // MARK: - life circle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +59,20 @@ class MainView: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - IMainView
+    
+    func loadData() {
+        
+    }
+    
+    func showData() {
+        
+    }
+    
+    func showError(message: String) {
+        
     }
     
 

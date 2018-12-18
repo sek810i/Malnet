@@ -8,10 +8,12 @@ import UIKit
 import Realm
 
 protocol ILogInView: class {
-    
+    func showAlert(message: String)
+    func goToMainScreen()
 }
 
 class LogInView: UIViewController, ILogInView {
+    
     
     //MARK: - Outlets
     
@@ -48,18 +50,23 @@ class LogInView: UIViewController, ILogInView {
         // Dispose of any resources that can be recreated.
     }
     
+    func showAlert(message: String) {
+        DispatchQueue.main.async {
+            self.present(ShowMessage.print(stitle: "Ошибка", smessage: message, buttontext: "ОК"), animated: true, completion: nil)
+        }
+    }
+    
+    func goToMainScreen() {
+        performSegue(withIdentifier: "userIn", sender: self)
+    }
+    
     
     @IBAction func login(_ sender: Any) {
         if fieldLogin.text?.isEmpty == true || fieldPassword.text?.isEmpty == true {
             self.present(ShowMessage.print(stitle: "Упс", smessage: "Пустые поля\nЗаполните их чем-нибудь", buttontext: "ОК"), animated: true, completion: nil)
         } else {
             controller?.sendLogin(login: fieldLogin.text!, password: fieldPassword.text!)
-            
-            
-            
-           // performSegue(withIdentifier: "userIn", sender: self)
         }
-        
     }
     
 
