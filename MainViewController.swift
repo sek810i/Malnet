@@ -10,7 +10,7 @@ import Foundation
 
 protocol IMainController{
     func loadData()
-    func showData()
+    func showData(info: ClientInfo)
 }
 
 class MainController: IMainController {
@@ -18,10 +18,10 @@ class MainController: IMainController {
     var model: IMainModel?
     
     func loadData() {
-        
+        model?.loadData()
     }
     
-    func showData() {
-        
+    func showData(info: ClientInfo) {
+        view?.showData(info: info)
     }
 }

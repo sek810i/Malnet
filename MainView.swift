@@ -10,7 +10,7 @@ import UIKit
 
 protocol IMainView: class {
     func loadData()
-    func showData()
+    func showData(info: ClientInfo)
     func showError(message: String)
 }
 
@@ -52,8 +52,16 @@ class MainView: UIViewController, IMainView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.setupMVC()
+        
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        controller?.loadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,8 +75,11 @@ class MainView: UIViewController, IMainView {
         
     }
     
-    func showData() {
-        
+    func showData(info: ClientInfo) {
+        DispatchQueue.main.async {
+            self.loginLabel.text = info.login
+            self.tarifLabel.text = info.utm?.tariff.first?.name
+        }
     }
     
     func showError(message: String) {

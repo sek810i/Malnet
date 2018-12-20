@@ -11,7 +11,7 @@ import RealmSwift
 
 class ClientInfo: Object {
     @objc dynamic var id: Int = 0
-    @objc dynamic var KvartiraID: Int = 0
+    @objc dynamic var KvartiraID: String = ""
     @objc dynamic var login: String = ""
     @objc dynamic var wi_fi_code: String = ""
     @objc dynamic var fio: String = ""
@@ -56,11 +56,11 @@ class ClientInfo: Object {
     @objc dynamic var last_lk_action_time: String = ""
     @objc dynamic var is_active: String = ""
     @objc dynamic var CTVOrderAvalaibality: String = ""
-    @objc dynamic var address: Address?
-    @objc dynamic var utm: UTM?
-    @objc dynamic var tariffs: Tariffs?
-    @objc dynamic var linkedServices: LinkedServices?
-    @objc dynamic var trustPaymentState: TrustPaymentState?
+    @objc dynamic var address: Address? = nil
+    @objc dynamic var utm: UTM? = nil
+    var tariffs: List<TariffsItem> = List<TariffsItem>()
+    @objc dynamic var linkedServices: LinkedServices? = nil
+    @objc dynamic var trustPaymentState: TrustPaymentState? = nil
 
     override static func primaryKey() -> String?{
         return "id"
@@ -148,9 +148,9 @@ class UTM: Object {
     @objc dynamic var id: String = ""
     @objc dynamic var credit_time: String = ""
     @objc dynamic var password: String = ""
-    var tariff: List<Tariff>?
-    @objc dynamic var additionalParams: AdditionalParams?
-    @objc dynamic var lastPayment: LastPayment?
+    var tariff: List<Tariff> = List<Tariff>()
+    @objc dynamic var additionalParams: AdditionalParams? = nil
+    @objc dynamic var lastPayment: LastPayment? = nil
     
     convenience init(mob_phone: String,
                      is_blocked: String,
@@ -162,9 +162,9 @@ class UTM: Object {
                      id: String,
                      credit_time: String,
                      password: String,
-                     tariff: List<Tariff>?,
-                     additionalParams: AdditionalParams?,
-                     lastPayment: LastPayment?) {
+                     tariff: List<Tariff>,
+                     additionalParams: AdditionalParams,
+                     lastPayment: LastPayment) {
         self.init()
         self.mob_phone = mob_phone
         self.is_blocked = is_blocked
@@ -190,7 +190,7 @@ class Tariff: Object {
     @objc dynamic var id: String = ""
     @objc dynamic var link_id: String = ""
     @objc dynamic var cost: String = ""
-    var ipAddresses: List<IPAddresses>?
+    var ipAddresses: List<IPAddresses> = List<IPAddresses>()
     
     convenience init(dp: String,
                      name: String,
@@ -198,7 +198,7 @@ class Tariff: Object {
                      id: String,
                      link_id: String,
                      cost: String,
-                     ipAddresses: List<IPAddresses>?) {
+                     ipAddresses: List<IPAddresses>) {
         self.init()
         self.dp = dp
         self.name = name
@@ -237,11 +237,11 @@ class IPAddresses: Object {
 class AdditionalParams: Object {
     @objc dynamic var sms_flag: String = ""
     @objc dynamic var credit_date: String = ""
-    @objc dynamic var wifimacs: [String] = []
+    var wifimacs: List<String> = List<String>()
     
     convenience init(sms_flag: String,
                      credit_date: String,
-                     wifimacs: [String]) {
+                     wifimacs: List<String>) {
         self.init()
         self.sms_flag = sms_flag
         self.credit_date = credit_date
@@ -254,12 +254,12 @@ class LastPayment: Object {
     @objc dynamic var sum: String = ""
     @objc dynamic var date: String = ""
     @objc dynamic var login: String = ""
-    @objc dynamic var comment: [String] = []
+    @objc dynamic var comment: String = ""
     
     convenience init(sum: String,
                      date: String,
                      login: String,
-                     comment: [String]) {
+                     comment: String) {
         self.init()
         self.sum = sum
         self.date = date
@@ -268,15 +268,6 @@ class LastPayment: Object {
     }
 
 }
-
-class Tariffs: Object {
-    var tariffsItems: List<TariffsItem>?
-    convenience init(tariffsItems: List<TariffsItem>) {
-        self.init()
-        self.tariffsItems = tariffsItems
-    }
-}
-
 
 class TariffsItem: Object {
     @objc dynamic var id: String = ""
@@ -309,8 +300,8 @@ class TariffsItem: Object {
 }
 
 class LinkedServices: Object {
-    var nm: List<NM>?
-    var utm: List<Utm>?
+    var nm: List<NM> = List<NM>()
+    var utm: List<Utm> = List<Utm>()
     
     convenience init(nm: List<NM>,
                      utm: List<Utm>) {
@@ -373,21 +364,12 @@ class Utm: Object {
 class TrustPaymentState: Object {
     @objc dynamic var state: String = ""
     @objc dynamic var time: String = ""
-    @objc dynamic var price: String = ""
-    @objc dynamic var link_date: String = ""
-    @objc dynamic var type: String = ""
     
     convenience init(state: String,
-                     time: String,
-                     price: String,
-                     link_date: String,
-                     type: String) {
+                     time: String) {
         self.init()
         self.state = state
         self.time = time
-        self.price = price
-        self.link_date = link_date
-        self.type = type
     }
 }
 
